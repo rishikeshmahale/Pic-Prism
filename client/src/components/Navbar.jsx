@@ -8,6 +8,7 @@ const Navbar = () => {
       {/* Logo and site name */}
 
       <div className="flex justify-between items-center">
+        <img src="/picprismlogo.png" alt="logo" className="w-[50px]" />
         <Link to={"/login"} className="font-bold text-3xl">
           PicPrism
         </Link>
@@ -15,7 +16,7 @@ const Navbar = () => {
 
       {/* list of other tabs */}
 
-      <ul className="flex gap-5 text-lg font-semibold text-gray-400">
+      <ul className="flex gap-5 text-lg font-semibold text-gray-400 ml-5 sm:ml-0">
         <Link to={"/about"} className="hover:text-black cursor-pointer sm:p-2">
           About
         </Link>
@@ -32,8 +33,6 @@ const Navbar = () => {
           Sign up
         </Link>
       </ul>
-
-      {/* <HeroSection /> */}
     </nav>
   );
 };

@@ -6,6 +6,7 @@ import BuyerDashboard from "./pages/BuyerDashboard.jsx";
 import SellerDashboard from "./pages/SellerDashboard.jsx";
 
 import Navbar from "./components/Navbar.jsx";
+import Footer from "./components/Footer.jsx"
 
 function App() {
   return (
@@ -21,6 +22,8 @@ function App() {
           <Route path="/buyer/profile" element={<BuyerDashboard />} />
           <Route path="/seller/profile" element={<SellerDashboard />} />
         </Routes>
+
+        <Footer />
       </Router>
     </>
   );

@@ -1,12 +1,8 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Home from "./pages/Home.jsx";
-import Login from "./pages/Login.jsx";
-import Signup from "./pages/Signup.jsx";
-import BuyerDashboard from "./pages/BuyerDashboard.jsx";
-import SellerDashboard from "./pages/SellerDashboard.jsx";
 
 import Navbar from "./components/Navbar.jsx";
 import Footer from "./components/Footer.jsx"
+import GsapTransition from "./components/GsapTransition.jsx";
 
 function App() {
   return (
@@ -15,13 +11,7 @@ function App() {
         
         <Navbar />
 
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/buyer/profile" element={<BuyerDashboard />} />
-          <Route path="/seller/profile" element={<SellerDashboard />} />
-        </Routes>
+        <GsapTransition />
 
         <Footer />
       </Router>

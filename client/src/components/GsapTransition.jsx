@@ -20,7 +20,7 @@ const GsapTransition = () => {
 
   const location = useLocation();
 
-  console.log("The location is" + location);
+  // console.log("The location is" + location);
 
   useEffect(() => {
     if (nodeRef.current) {

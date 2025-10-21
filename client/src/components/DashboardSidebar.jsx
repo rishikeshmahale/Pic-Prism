@@ -60,7 +60,12 @@ const DashboardSidebar = () => {
             <SiGoogleanalytics /> Analytics
           </li>
 
-          <li className="w-full rounded-lg px-2 hover:bg-black hover:text-white cursor-pointer transition-all ease-linear duration-300 hover:scale-105 flex gap-2 justify-start items-center">
+          <li
+            className={`w-full rounded-lg px-2 hover:bg-black hover:text-white cursor-pointer transition-all ease-linear duration-300 hover:scale-105 flex gap-2 justify-start items-center ${
+              tab === "Orders" && "bg-black text-white"
+            } `}
+            onClick={() => dispatch(setTab("Orders"))}
+          >
             <FaList /> Orders
           </li>
 

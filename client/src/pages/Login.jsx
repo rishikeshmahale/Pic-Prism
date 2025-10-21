@@ -1,12 +1,47 @@
-import { Link } from "react-router-dom";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
+import axios from "axios";
+import { login } from "../../store/slices/authSlice.js";
+import { useDispatch } from "react-redux";
 
 const Login = () => {
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post(import.meta.env.VITE_API_URL + "/login", {
+        email,
+        password,
+      });
+
+      const data = await response.data;
+
+      if (data) {
+        toast.success(data.message);
+      }
+
+      dispatch(login(data));
+      
+      navigate(`/${data.role}/profile`);
+
+    } catch (error) {
+      // console.log(error.response);
+      toast.error(error.response.data.message);
+    }
+  };
+
   return (
     <div className="mt-15 min-h-screen flex items-center justify-center w-full">
       <div className="bg-white shadow-md rounded-3xl px-8 py-6 w-full sm:w-[27vw]">
         <h1 className="text-2xl font-bold text-center mb-4">Let's Connect!</h1>
-        <form>
-
+        <form onSubmit={handleLogin}>
           {/* Email */}
           <div className="mb-4">
             <label
@@ -20,6 +55,8 @@ const Login = () => {
               name="email"
               id="email"
               placeholder="abc123@gmail.com"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               className="shadow-md rounded-md w-full px-3 py-2 border border-gray-300 focus:outline-none focus:ring-black focus:border-black"
             />
           </div>
@@ -37,12 +74,16 @@ const Login = () => {
               name="password"
               id="password"
               placeholder="Enter your password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               className="shadow-md rounded-md w-full px-3 py-2 border border-gray-300 focus:outline-none focus:ring-black focus:border-black"
             />
           </div>
 
           {/* For Forgot Password  */}
-          <a href="#" className="text-xs text-gray-600 hover:text-black">Forgot Password</a>
+          <a href="#" className="text-xs text-gray-600 hover:text-black">
+            Forgot Password
+          </a>
 
           {/* Signup with Account */}
           <div className="flex items-center justify-end mt-5 mb-5">
@@ -54,7 +95,10 @@ const Login = () => {
             </Link>
           </div>
 
-          <button type="submit" className="w-full py-2 px-4 rounded-md shadow-md text-sm font-medium text-[#ffffffb8] bg-[#111] hover:bg-[#222]">
+          <button
+            type="submit"
+            className="w-full py-2 px-4 rounded-md shadow-md text-sm font-medium text-[#ffffffb8] bg-[#111] hover:bg-[#222]"
+          >
             Log In
           </button>
         </form>
@@ -64,3 +108,5 @@ const Login = () => {
 };
 
 export default Login;
+
+// 34:00

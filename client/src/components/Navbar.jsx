@@ -1,10 +1,18 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import Home from "../pages/Home";
 import HeroSection from "./HeroSection";
 
 const Navbar = () => {
+  const { pathname } = useLocation();
+
   return (
-    <nav className="flex flex-col sm:flex-row justify-between items-start sm:items-center px-5 py-5 fixed left-0 top-0 right-0 shadow-md gap-1 sm:gap-0 z-30 bg-white">
+    <nav
+      className={`flex flex-col sm:flex-row justify-between items-start sm:items-center px-5 py-5 ${
+        pathname === "/seller/profile" || pathname === "/buyer/profile"
+          ? "hidden"
+          : "fixed"
+      } left-0 top-0 right-0 shadow-md gap-1 sm:gap-0 z-30 bg-white`}
+    >
       {/* Logo and site name */}
 
       <div className="flex justify-between items-center">

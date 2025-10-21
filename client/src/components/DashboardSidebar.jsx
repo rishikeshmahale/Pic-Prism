@@ -2,20 +2,27 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { IoLogOut } from "react-icons/io5";
 import { IoIosHeart, IoMdPhotos } from "react-icons/io";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { SiGoogleanalytics } from "react-icons/si";
 import { AiFillHome } from "react-icons/ai";
 import { FaList } from "react-icons/fa";
 
 import { setTab } from "../../store/slices/navSlice.js";
+import { logout } from "../../store/slices/authSlice.js";
 
 const DashboardSidebar = () => {
   const { pathname } = useLocation();
+  const dispatch = useDispatch();
+
+  const navigate = useNavigate();
 
   const { author } = useSelector((state) => state.auth);
   const { sidebar, tab } = useSelector((state) => state.nav);
 
-  const dispatch = useDispatch();
+  const handleLogout = () => {
+    dispatch(logout());
+    navigate("/logout");
+  };
 
   return (
     <nav
@@ -29,7 +36,7 @@ const DashboardSidebar = () => {
       <div>
         {/* First letter in Capital */}
         <div className="bg-black my-5 w-fit rounded-full py-4 px-6 text-white">
-          {author.charAt(0).toUpperCase()}
+          {author && author.charAt(0).toUpperCase()}
         </div>
 
         {/* list items */}
@@ -45,7 +52,12 @@ const DashboardSidebar = () => {
               <IoMdPhotos /> Photo Management
             </li>
           ) : (
-            <li className="w-full rounded-lg px-2 hover:bg-black hover:text-white cursor-pointer transition-all ease-linear duration-300 hover:scale-105 flex gap-2 justify-start items-center">
+            <li
+              className={`w-full rounded-lg px-2 hover:bg-black hover:text-white cursor-pointer transition-all ease-linear duration-300 hover:scale-105 flex gap-2 justify-start items-center ${
+                tab === "Photos Purchased" && "bg-black text-white"
+              }`}
+              onClick={() => dispatch(setTab("Photos Purchased"))}
+            >
               <IoMdPhotos /> Photos Purchased
             </li>
           )}
@@ -69,11 +81,21 @@ const DashboardSidebar = () => {
             <FaList /> Orders
           </li>
 
-          <li className="w-full rounded-lg px-2 hover:bg-black hover:text-white cursor-pointer transition-all ease-linear duration-300 hover:scale-105 flex gap-2 justify-start items-center">
+          <li
+            className={`w-full rounded-lg px-2 hover:bg-black hover:text-white cursor-pointer transition-all ease-linear duration-300 hover:scale-105 flex gap-2 justify-start items-center ${
+              tab === "Favourites" && "bg-black text-white"
+            } `}
+            onClick={() => dispatch(setTab("Favourites"))}
+          >
             <IoIosHeart /> Favourites
           </li>
 
-          <li className="w-full rounded-lg px-2 hover:bg-black hover:text-white cursor-pointer transition-all ease-linear duration-300 hover:scale-105 flex gap-2 justify-start items-center">
+          <li
+            className={`w-full rounded-lg px-2 hover:bg-black hover:text-white cursor-pointer transition-all ease-linear duration-300 hover:scale-105 flex gap-2 justify-start items-center ${
+              tab === "Home" && "bg-black text-white"
+            } `}
+            onClick={() => dispatch(setTab("Home"))}
+          >
             <AiFillHome /> Home
           </li>
         </div>
@@ -81,7 +103,10 @@ const DashboardSidebar = () => {
 
       {/* logout button*/}
 
-      <li className="w-full rounded-lg px-2 hover:bg-black hover:text-white cursor-pointer transition-all ease-linear duration-300 hover:scale-105 flex gap-2 justify-start items-center">
+      <li
+        className="w-full rounded-lg px-2 hover:bg-black hover:text-white cursor-pointer transition-all ease-linear duration-300 hover:scale-105 flex gap-2 justify-start items-center"
+        onClick={handleLogout}
+      >
         <IoLogOut /> Logout
       </li>
     </nav>

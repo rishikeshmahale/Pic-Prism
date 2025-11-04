@@ -25,7 +25,7 @@ const GsapTransition = () => {
   useEffect(() => {
     if (nodeRef.current) {
       gsap.fromTo(nodeRef.current, { opacity: 0 }, { opacity: 1, duration: 0.6 });
-      toast.success(location.pathname);
+      // toast.success(location.pathname);
     }
   }, [location]);
 

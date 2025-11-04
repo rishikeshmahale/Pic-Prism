@@ -1,12 +1,17 @@
-import React from 'react';
-import DashboardSidebar from '../components/DashboardSidebar.jsx';
+import React from "react";
+import DashboardSidebar from "../components/DashboardSidebar.jsx";
+import PhotoManagement from "../components/seller/PhotoManagement.jsx";
 
 const SellerDashboard = () => {
   return (
-    <div>
+    <div className="flex flex-col sm:flex-row">
       <DashboardSidebar />
-    </div>
-  )
-}
 
-export default SellerDashboard
+      <div>{/* We will change the pages through switch case here */}</div>
+
+      <PhotoManagement />
+    </div>
+  );
+};
+
+export default SellerDashboard;

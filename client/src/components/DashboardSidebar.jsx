@@ -10,6 +10,8 @@ import { FaList } from "react-icons/fa";
 import { setTab } from "../../store/slices/navSlice.js";
 import { logout } from "../../store/slices/authSlice.js";
 
+import { toast} from "react-hot-toast";
+
 const DashboardSidebar = () => {
   const { pathname } = useLocation();
   const dispatch = useDispatch();
@@ -21,7 +23,8 @@ const DashboardSidebar = () => {
 
   const handleLogout = () => {
     dispatch(logout());
-    navigate("/logout");
+    toast.success("Logout Sucessfull");
+    navigate("/login");
   };
 
   return (
@@ -30,12 +33,11 @@ const DashboardSidebar = () => {
         !sidebar == true
           ? "-translate-x-[500px] sm:translate-x-0"
           : "translate-x-0"
-      } flex text-lg font-semibold bg-white shadow-lg flex-col gap-2 p-3 w-fit min-h-screen list-none justify-between items-center`}
+      } ease-in-out duration-300 flex sm:static text-lg font-semibold bg-white shadow-lg flex-col gap-2 p-3 w-fit min-h-screen list-none justify-between items-center`}
     >
       {/* DashboardSidebar */}
       <div>
-        {/* First letter in Capital */}
-        <div className="bg-black my-5 w-fit rounded-full py-4 px-6 text-white">
+       <div className="bg-black my-5 w-fit rounded-full py-4 px-6 text-white">
           {author && author.charAt(0).toUpperCase()}
         </div>
 

@@ -28,7 +28,6 @@ const useUpload = async ({ image, onUploadProgress }) => {
         config
       );
 
-      console.log("data from useUpload", data);
       const data = await response.data;
 
       if (!data) {

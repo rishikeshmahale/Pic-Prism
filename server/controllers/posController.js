@@ -64,17 +64,16 @@ const getMyPosts = async (req, res) => {
 
       return res.status(200).json({ success: true, data: purchased });
     } else {
-        const { uploads } = await User.findById(authorId).populate("uploads");
-        
-        if (!uploads) {
-            return res.status(404).json({ succss: false, messag: "No Posts found" });
-        }
+      const { uploads } = await User.findById(authorId).populate("uploads");
 
-        return res.status(200).json({success : true, data : uploads})
-
+      if (!uploads) {
+        return res
+          .status(404)
+          .json({ succss: false, messag: "No Posts found" });
       }
-      
 
+      return res.status(200).json({ success: true, data: uploads });
+    }
   } catch (error) {
     return res
       .status(500)
@@ -82,8 +81,129 @@ const getMyPosts = async (req, res) => {
   }
 };
 
-module.exports = {
-    createPost,
-    getAllPosts,
-    getMyPosts
+const deletePost = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const posts = await Post.findById(id);
+
+    if (!posts) {
+      return res
+        .status(404)
+        .json({ success: false, message: "Post not found" });
+    }
+
+    const { authorId } = posts;
+
+    await User.findByIdAndUpdate(authorId, {
+      $pull: { uploads: id },
+    });
+
+    return res
+      .status(200)
+      .json({ success: true, message: "Post deleted successfully." });
+  } catch (error) {
+    return res.status(500).json({ succss: false, message: error.message });
+  }
+};
+
+const searchPosts = async (req, res) => {
+
+  const { search } = req.query;
+
+  try {
+    
+    const posts = await Post.find({
+      title: {
+        $regex: search,
+        $options: "i"
+      }
+    });
+
+    if (posts.length === 0) {
+      return res.status(404).json({ success: false, message: "No Posts found" });
+    }
+
+    return res.status(200).json({ success: true, data: posts });
+
+  } catch (error) {
+     return res.status(500).json({ succss: false, message: error.message });
+  }
 }
+
+const addToFavourites = async (req, res) => {
+  const { authorId } = req.id;
+  const { postId } = req.params;
+
+  try {
+
+    const user = await User.findByIdAndUpdate(authorId, {
+      $push: {
+        favourites : postId
+      }
+    });
+
+    if (!user) {
+      return res.status(404).json({ success: false, message: "User not found" });
+    }
+
+    return res.status(200).json({ success: true, message: "Post added to favourites" });
+
+  } catch (error) {
+    return res.status(500).json({ success: false, error: error.message });
+  }
+}
+
+const removeFromFavourites = async (req, res) => {
+  const { authorId } = req.id;
+  const { postId } = req.params;
+
+  try {
+
+    const user = await User.findByIdAndUpdate(authorId, {
+      $pull: {
+        favourites : postId
+      }
+    });
+
+    if (!user) {
+      return res.status(404).json({ success: false, message: "User not found" });
+    }
+
+    return res.status(200).json({ success: true, message: "Post removed from favourites" });
+
+  } catch (error) {
+    return res.status(500).json({ success: false, error: error.message });
+  }
+}
+
+const getFavourites = async (res, res) => {
+
+  const authorId = req.id;
+
+  try {
+    
+    const {favourites} = await User.findById(authorId).populate("favourites");
+
+    if (!favourites) {
+       return res.status(404).json({ success: false, message: "No favourite post found"});
+    }
+
+    return res.status(200).json({ success: true, data: favourites });
+
+
+  } catch (error) {
+    return res.status(500).json({ message: false, error: error.message });
+  }
+}
+
+module.exports = {
+  createPost,
+  getAllPosts,
+  getMyPosts,
+  deletePost,
+  searchPosts,
+  addToFavourites,
+  removeFromFavourites,
+  getFavourites
+};

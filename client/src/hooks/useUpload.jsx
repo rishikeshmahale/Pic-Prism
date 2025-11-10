@@ -2,6 +2,7 @@ import axios from "axios";
 
 const useUpload = async ({ image, onUploadProgress }) => {
   const upload = async () => {
+    console.log(import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET);
     try {
       const formData = new FormData();
       formData.append("file", image);
@@ -22,9 +23,12 @@ const useUpload = async ({ image, onUploadProgress }) => {
       const response = await axios.post(
         `https://api.cloudinary.com/v1_1${
           import.meta.env.VITE_CLOUDINARY_CLOUD_NAME
-        }/image/upload`
+        }/image/upload`,
+        formData,
+        config
       );
 
+      console.log("data from useUpload", data);
       const data = await response.data;
 
       if (!data) {

@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 import toast from "react-hot-toast";
-import useUpload from "../../hooks/useUpload";
+import useUpload from "../hooks/useUpload.jsx";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import ProgressBar from "@ramonak/react-progress-bar";
+
+const dummyPlaceholderImage =
+  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTw_HeSzHfBorKS4muw4IIeVvvRgnhyO8Gn8w&s";
 
 const ImageAdd = () => {
   const [image, setImage] = useState(null);
@@ -54,7 +57,7 @@ const ImageAdd = () => {
           title,
           price,
           image: secure_url,
-          public_id: public_id,
+          publicId: public_id,
           author,
         },
         {
@@ -82,13 +85,9 @@ const ImageAdd = () => {
       <h2 className="text-xl font-bold">Add New Product</h2>
       <form className="grid grid-cols-1 gap-2 my-4" onSubmit={addPost}>
         <img
-          src={`${
-            image
-              ? URL.createObjectURL(image)
-              : "https://dummyimage.in/600x400/d4d4d4/ffffff?text=No%20Image"
-          }`}
+          src={`${image ? URL.createObjectURL(image) : dummyPlaceholderImage}`}
           alt="this picture"
-          className="w-[350px] h-[25vh] sm:h-[30vh] rounded-lg object-cover"
+          className="w-[200px] h-[25vh] sm:h-[30vh] rounded-lg object-cover"
         />
 
         {/* Progress bar */}

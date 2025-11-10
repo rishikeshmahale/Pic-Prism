@@ -23,7 +23,7 @@ const DashboardSidebar = () => {
 
   const handleLogout = () => {
     dispatch(logout());
-    toast.success("Logout Sucessfull");
+    toast.success("Logout Successfull");
     navigate("/login");
   };
 

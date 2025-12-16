@@ -23,6 +23,8 @@ const Login = () => {
 
       const data = await response.data;
 
+      // console.log(data);
+
       if (data) {
         toast.success(data.message);
       }
@@ -32,7 +34,9 @@ const Login = () => {
       navigate(`/${data.role}/profile`);
 
     } catch (error) {
-      // console.log(error.response);
+      console.log(error.response);
+      console.log(error.response.data);
+      console.log(error.response.data.message);
       toast.error(error.response.data.message);
     }
   };
@@ -108,5 +112,3 @@ const Login = () => {
 };
 
 export default Login;
-
-// 34:00

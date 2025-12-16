@@ -1,8 +1,8 @@
 import axios from "axios";
 
 const useUpload = async ({ image, onUploadProgress }) => {
+
   const upload = async () => {
-    console.log(import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET);
     try {
       const formData = new FormData();
       formData.append("file", image);
@@ -20,10 +20,16 @@ const useUpload = async ({ image, onUploadProgress }) => {
         withCredentials: false,
       };
 
+      // const response = await axios.post(
+      //   `https://api.cloudinary.com/v1_1${
+      //     import.meta.env.VITE_CLOUDINARY_CLOUD_NAME
+      //   }/image/upload`,
+      //   formData,
+      //   config
+      // );
+
       const response = await axios.post(
-        `https://api.cloudinary.com/v1_1${
-          import.meta.env.VITE_CLOUDINARY_CLOUD_NAME
-        }/image/upload`,
+        `https://api.cloudinary.com/v1_1/${import.meta.env.VITE_CLOUDINARY_CLOUD_NAME}/image/upload`,
         formData,
         config
       );

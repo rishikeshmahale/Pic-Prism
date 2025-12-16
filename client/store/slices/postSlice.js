@@ -10,7 +10,7 @@ const postSlice = createSlice({
         setAllPosts: (state, action) => {
             state.allPosts = action.payload
         },
-        setMyPosts: (action, payload) => {
+        setMyPosts: (state, action) => {
             state.myPosts = action.payload;
         }
     }

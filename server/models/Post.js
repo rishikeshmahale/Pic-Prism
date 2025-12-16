@@ -13,6 +13,10 @@ const postSchema = new mongoose.Schema({
         type: Number,
         required: true
     },
+     image: {
+      type: String,
+      required: true,
+    },
     publicId: {
         type: String,
         required: true

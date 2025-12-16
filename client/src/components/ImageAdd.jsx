@@ -24,7 +24,7 @@ const ImageAdd = () => {
 
   const onUploadProgress = (progressEvent) => {
     return setProgress(
-      Math.round((progressEvent.total * 100) / progressEvent.total)
+      Math.round((progressEvent.loaded * 100) / progressEvent.total)
     );
   };
 
@@ -47,9 +47,14 @@ const ImageAdd = () => {
         onUploadProgress,
       });
 
+      console.log("public id :", public_id);
+      console.log("secure url :", secure_url);
+
       if (!public_id || !secure_url) {
         return toast.error("Image Upload Failed");
       }
+
+      console.log("secure url : ", secure_url)
 
       const response = await axios.post(
         import.meta.env.VITE_API_URL + "/post/create",
@@ -69,6 +74,8 @@ const ImageAdd = () => {
 
       const data = await response.data;
 
+      console.log("data from /post/create : ", data);
+
       if (data.success == true) {
         toast.success(data.message);
         e.target.reset();
@@ -76,6 +83,7 @@ const ImageAdd = () => {
         setProgress(0);
       }
     } catch (error) {
+      console.log("Error in image upload", error)
       return toast.error(error.response.data.message);
     }
   };
@@ -94,7 +102,7 @@ const ImageAdd = () => {
 
         {progress > 0 && (
           <ProgressBar
-            completed={10}
+            completed={progress}
             bgColor="black"
             transitionTimingFunction="ease-in-out"
           />

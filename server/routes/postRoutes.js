@@ -8,8 +8,8 @@ const {
   deletePost,
   searchPosts,
   addToFavourites,
-    removeFromFavourites,
-  getFavourites
+  removeFromFavourites,
+  getFavourites,
 } = require("../controllers/posController.js");
 
 router.post("/post/create", verifyToken, createPost);
@@ -23,6 +23,6 @@ router.put(
   verifyToken,
   removeFromFavourites
 );
-router.get("/posts/favourites", verifyToken, getFavourites)
+router.get("/posts/favourites", verifyToken, getFavourites);
 
 module.exports = router;

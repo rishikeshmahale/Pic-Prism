@@ -177,7 +177,7 @@ const removeFromFavourites = async (req, res) => {
   }
 }
 
-const getFavourites = async (res, res) => {
+const getFavourites = async (req, res) => {
 
   const authorId = req.id;
 
